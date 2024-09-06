@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import React from 'react';
-import {render} from 'ink';
+import { render } from 'ink';
 import meow from 'meow';
 import App from './app.js';
 
@@ -10,11 +10,10 @@ const cli = meow(
 	  $ terminotion
 
 	Options
-		--name  Your name
+		--token  Your Notion API token
 
 	Examples
-	  $ terminotion --name=Jane
-	  Hello, Jane
+	  $ terminotion --token=XXXXX
 `,
 	{
 		importMeta: import.meta,
