@@ -25,7 +25,6 @@ const recreatePageHiearchy = (data: any) => {
         uniqueId: item.properties.ID.unique_id.prefix + "-" +  item.properties.ID.unique_id.number,
         title: item.properties.Name.title[0].plain_text,
         status: item.properties.Status.select.name,
-        children: [],
       }
       pageHiearchy.push(page)
     }
@@ -40,11 +39,17 @@ const recreatePageHiearchy = (data: any) => {
   })
 
   subPages.forEach((item: any) => {
-    pageHiearchy.find((page: any) => {
-      if (page.id === item.parent) {
-        page.children.push(item)
-      }
-    })
+    // Append the subpages after the parent and add a ">" before the title to indicate the hierarchy
+    const parentIndex = pageHiearchy.findIndex((page: any) => page.id === item.parent)
+    if (parentIndex > -1) {
+      pageHiearchy.splice(parentIndex + 1, 0, {
+        id: item.id,
+        uniqueId: "> " + item.uniqueId,
+        title: item.title,
+        status: item.status
+      })
+    }
+
   })
 
   return pageHiearchy

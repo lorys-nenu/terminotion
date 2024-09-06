@@ -11,8 +11,6 @@ export default function App({ token = '' }: Props) {
 
 	const { data: dbData, loading, refresh } = useNotion({ token, dbId: "5395603fc06e45959832c3b6f803f643" })
 
-	console.log(loading, dbData)
-
 	useInput((input) => {
 		if (input === 'q') {
 			process.exit();
