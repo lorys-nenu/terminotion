@@ -4,12 +4,13 @@ import { Text, useInput } from 'ink';
 import useNotion from './useNotion.js';
 
 type Props = {
-	token: string | undefined;
+	token: string;
+	databaseId: string;
 };
 
-export default function App({ token = '' }: Props) {
+export default function App({ token, databaseId }: Props) {
 
-	const { data: dbData, loading, refresh } = useNotion({ token, dbId: "5395603fc06e45959832c3b6f803f643" })
+	const { data: dbData, loading, refresh } = useNotion({ token, databaseId: databaseId })
 
 	useInput((input) => {
 		if (input === 'q') {

@@ -20,9 +20,14 @@ const cli = meow(
 		flags: {
 			token: {
 				type: 'string',
+				isRequired: true,
+			},
+			"database": {
+				type: 'string',
+				isRequired: true,
 			},
 		},
 	},
 );
 
-render(<App token={cli.flags.token} />);
+render(<App token={cli.flags.token} databaseId={cli.flags["database"]} />);

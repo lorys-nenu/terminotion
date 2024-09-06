@@ -7,7 +7,7 @@ import { Client } from "@notionhq/client";
 
 type Props = {
   token: string;
-  dbId: string;
+  databaseId: string;
 }
 
 const recreatePageHiearchy = (data: any) => {
@@ -55,7 +55,7 @@ const recreatePageHiearchy = (data: any) => {
   return pageHiearchy
 }
 
-const useNotion = ({token, dbId}: Props) => {
+const useNotion = ({token, databaseId}: Props) => {
   // Initializing a client
   const notion = new Client({
     auth: token,
@@ -68,7 +68,7 @@ const useNotion = ({token, dbId}: Props) => {
   const fetchData = async () => {
     setLoading(true)
     const response = await notion.databases.query({
-      database_id: dbId,
+      database_id: databaseId,
     })
     setData(response.results)
     setLoading(false)
@@ -76,7 +76,7 @@ const useNotion = ({token, dbId}: Props) => {
 
   useEffect(() => {
     fetchData()
-  }, [token, dbId])
+  }, [token, databaseId])
 
   return {
     data: recreatePageHiearchy(data),
