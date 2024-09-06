@@ -11,6 +11,10 @@ type Props = {
 }
 
 const recreatePageHiearchy = (data: any) => {
+  if (!data) {
+    return null
+  }
+
   const pageHiearchy: any[] = []
   const subPages: any[] = []
   data.forEach((item: any) => {
@@ -54,22 +58,26 @@ const useNotion = ({token, dbId}: Props) => {
 
   // Get the data from Notion
   const [data, setData] = useState<any>(null)
+  const [isLoading, setLoading] = useState<boolean>(true)
+
+  const fetchData = async () => {
+    setLoading(true)
+    const response = await notion.databases.query({
+      database_id: dbId,
+    })
+    setData(response.results)
+    setLoading(false)
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await notion.databases.query({
-        database_id: dbId,
-      })
-      setData(response.results)
-    }
     fetchData()
   }, [token, dbId])
 
-  if (!data) {
-    return null
+  return {
+    data: recreatePageHiearchy(data),
+    refresh: fetchData,
+    loading: isLoading,
   }
-
-  return recreatePageHiearchy(data)
 }
 
 export default useNotion;
